@@ -1,6 +1,5 @@
 from tkinter import *
 import os
-import time
 import math
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -16,10 +15,20 @@ LONG_BREAK_MIN = 20
 
 reps = 0
 marks_txt = ""
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
-    pass
+    global reps
+    global marks_txt
+
+    window.after_cancel(timer)
+    reps = 0
+    marks_txt = ""
+
+    top_label.config(text="Timer", fg=GREEN)
+    check_marks.config(text=marks_txt)
+    tomato.itemconfig(timer_text, text="00:00")
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
@@ -40,11 +49,11 @@ def start_timer():
         count_down(work_sec)
         top_label.config(text="Work", fg=GREEN)
 
-
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
     global reps
     global marks_txt
+    global timer
 
     count_min = math.floor(count / 60)
     count_sec = count % 60
@@ -57,7 +66,7 @@ def count_down(count):
 
     tomato.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
     if count >= 0:
-        window.after(1000, count_down, count-1)
+        timer = window.after(1000, count_down, count-1)
     else:
         start_timer()
         if reps % 2 == 0:
@@ -68,8 +77,6 @@ def count_down(count):
 window = Tk()
 window.title("Pomodoro")
 window.config(padx=100, pady=50, bg=YELLOW)
-
-
 
 base_folder = os.path.dirname(__file__)
 image_path = os.path.join(base_folder, "tomato.png")
