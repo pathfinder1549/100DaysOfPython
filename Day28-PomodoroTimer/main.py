@@ -1,4 +1,5 @@
-
+from tkinter import *
+import os
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -16,3 +17,17 @@ LONG_BREAK_MIN = 20
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 
 # ---------------------------- UI SETUP ------------------------------- #
+window = Tk()
+window.title("Pomodoro")
+window.config(padx=100, pady=50, bg=YELLOW)
+
+base_folder = os.path.dirname(__file__)
+image_path = os.path.join(base_folder, "tomato.png")
+
+canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
+tomato_img = PhotoImage(file=image_path)
+canvas.create_image(100, 112, image=tomato_img)
+canvas.create_text(100, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "bold"))
+canvas.pack()
+
+window.mainloop()
