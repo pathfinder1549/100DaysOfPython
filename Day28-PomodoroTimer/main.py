@@ -33,6 +33,10 @@ def reset_timer():
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
     global reps
+
+    # check if timer already started
+    if reps > 0:
+        return
     reps += 1
 
     work_sec = 10 #WORK_MIN * 60
