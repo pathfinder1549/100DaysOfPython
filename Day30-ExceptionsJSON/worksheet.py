@@ -10,4 +10,20 @@ except FileNotFoundError:
     file.write("new file created")
 except KeyError as error_message:
     print(f"The key {error_message} does not exist")
+else:
+    content = file.read()
+    print(content)
+finally:
+    file.close()
+    print("file closed")
 
+# custom exceptions
+
+height = float(input("height: "))
+weight = float(input("weight: "))
+
+if height > 3:
+    raise ValueError("Height should not be more than 3 meters")
+
+bmi = weight / height ** 2
+print(f"BMI: {bmi}")
