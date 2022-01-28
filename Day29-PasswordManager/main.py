@@ -9,7 +9,19 @@ def gen_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_entry():
-    pass
+    """Save field contents to data file"""
+    site = site_entry.get()
+    user = user_entry.get()
+    pw = pass_entry.get()
+
+    entry_str = f"{site} | {user} | {pw}"
+    with open("data.txt", mode="w") as file:
+        file.writelines(entry_str)
+    
+    site_entry.delete()
+    user_entry.delete()
+    pass_entry.delete()
+    
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -33,19 +45,21 @@ user_label.grid(column=0, row=2)
 pass_label = Label(text="Password:")
 pass_label.grid(column=0, row=3)
 
-site_entry = Entry(width=35)
-site_entry.grid(column=1, row=1, columnspan=2)
+site_entry = Entry(width=36)
+site_entry.grid(column=1, row=1, columnspan=2, sticky="ew")
+site_entry.focus()
 
-user_entry = Entry(width=35)
-user_entry.grid(column=1, row=2, columnspan=2)
+user_entry = Entry(width=36)
+user_entry.grid(column=1, row=2, columnspan=2, sticky="ew")
+user_entry.insert(0, "email.address@gmail.com")
 
-pass_entry = Entry(width=21)
-pass_entry.grid(column=1, row=3)
+pass_entry = Entry(width=27)
+pass_entry.grid(column=1, row=3, sticky="ew")
 
 gen_button = Button(text="Generate Password", command=gen_password)
-gen_button.grid(column=2, row=3)
+gen_button.grid(column=2, row=3, sticky="ew")
 
 add_button = Button(text="Add", command=add_entry, width=36)
-add_button.grid(column=1, row=4, columnspan=2)
+add_button.grid(column=1, row=4, columnspan=2, sticky="ew")
 
 window.mainloop()
