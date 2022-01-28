@@ -17,24 +17,19 @@ def gen_password():
     nr_symbols = random.randint(2, 4)
     nr_numbers = random.randint(2, 4)
 
-    password_list = []
-
-    for char in range(nr_letters):
-        password_list.append(random.choice(letters))
-
-    for char in range(nr_symbols):
-        password_list += random.choice(symbols)
-
-    for char in range(nr_numbers):
-        password_list += random.choice(numbers)
-
+    letter_list = [random.choice(letters) for n in range(nr_letters)]
+    symbol_list = [random.choice(symbols) for n in range(nr_symbols)]
+    number_list = [random.choice(numbers) for n in range(nr_numbers)]
+    password_list = letter_list + symbol_list + number_list
     random.shuffle(password_list)
 
     password = ""
     for char in password_list:
         password += char
 
-    print(f"Your password is: {password}")
+    pass_entry.delete(0, END)
+    pass_entry.insert(0, password)
+    #print(f"Your password is: {password}")
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_entry():
@@ -58,10 +53,10 @@ def add_entry():
             file.write(f"{site} | {user} | {pw}\n")
 
         # reset fields
-        site_entry.delete(0,END)
-        user_entry.delete(0,END)
+        site_entry.delete(0, END)
+        user_entry.delete(0, END)
         user_entry.insert(0, "email.address@gmail.com")
-        pass_entry.delete(0,END)
+        pass_entry.delete(0, END)
         site_entry.focus()
     
 # ---------------------------- UI SETUP ------------------------------- #
