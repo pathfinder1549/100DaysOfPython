@@ -19,10 +19,11 @@ def add_entry():
     pw = pass_entry.get()
     
     # check for empty strings
-    if not user and not pw:
+    if site and user and pw:
         input_ok = messagebox.askokcancel(title=site, message=f"New entry:\nSite: {site}\nEmail: {user}\nPassword: {pw}\nIs this correct?")
     else:
-        messagebox.askquestion(title="Warning", message="Please don't leave any fields empty!")
+        messagebox.showinfo(title="Warning", message="Please don't leave any fields empty!")
+        input_ok = False
 
     # write to file
     if input_ok:
