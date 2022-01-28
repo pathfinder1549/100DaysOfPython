@@ -1,4 +1,6 @@
+from email import message
 from tkinter import *
+from tkinter import messagebox
 import os
 
 #FONT = ("Ariel", 12, "normal")
@@ -15,19 +17,26 @@ def add_entry():
     site = site_entry.get()
     user = user_entry.get()
     pw = pass_entry.get()
+    
+    # check for empty strings
+    if not user and not pw:
+        input_ok = messagebox.askokcancel(title=site, message=f"New entry:\nSite: {site}\nEmail: {user}\nPassword: {pw}\nIs this correct?")
+    else:
+        messagebox.askquestion(title="Warning", message="Please don't leave any fields empty!")
 
     # write to file
-    entry_str = f"{site} | {user} | {pw}\n"
-    with open("data.txt", mode="a") as file:
-        file.write(entry_str)
-    
-    # reset fields
-    site_entry.delete(0,END)
-    user_entry.delete(0,END)
-    user_entry.insert(0, "email.address@gmail.com")
-    pass_entry.delete(0,END)
-    
+    if input_ok:
+        with open("data.txt", mode="a") as file:
+            file.write(f"{site} | {user} | {pw}\n")
 
+        # reset fields
+        site_entry.delete(0,END)
+        user_entry.delete(0,END)
+        user_entry.insert(0, "email.address@gmail.com")
+        pass_entry.delete(0,END)
+        site_entry.focus()
+
+    
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
