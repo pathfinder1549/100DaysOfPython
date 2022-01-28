@@ -10,17 +10,22 @@ def gen_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_entry():
     """Save field contents to data file"""
+    
+    # get contents of fields
     site = site_entry.get()
     user = user_entry.get()
     pw = pass_entry.get()
 
-    entry_str = f"{site} | {user} | {pw}"
-    with open("data.txt", mode="w") as file:
-        file.writelines(entry_str)
+    # write to file
+    entry_str = f"{site} | {user} | {pw}\n"
+    with open("data.txt", mode="a") as file:
+        file.write(entry_str)
     
-    site_entry.delete()
-    user_entry.delete()
-    pass_entry.delete()
+    # reset fields
+    site_entry.delete(0,END)
+    user_entry.delete(0,END)
+    user_entry.insert(0, "email.address@gmail.com")
+    pass_entry.delete(0,END)
     
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -37,29 +42,29 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(column=1, row=0)
 
 site_label = Label(text="Website:")
-site_label.grid(column=0, row=1)
+site_label.grid(column=0, row=1, sticky="e")
 
 user_label = Label(text="Email/Username:")
-user_label.grid(column=0, row=2)
+user_label.grid(column=0, row=2, sticky="e")
 
 pass_label = Label(text="Password:")
-pass_label.grid(column=0, row=3)
+pass_label.grid(column=0, row=3, sticky="e")
 
 site_entry = Entry(width=36)
-site_entry.grid(column=1, row=1, columnspan=2, sticky="ew")
+site_entry.grid(column=1, row=1, columnspan=2, sticky="ew", padx=5)
 site_entry.focus()
 
 user_entry = Entry(width=36)
-user_entry.grid(column=1, row=2, columnspan=2, sticky="ew")
+user_entry.grid(column=1, row=2, columnspan=2, sticky="ew", padx=5)
 user_entry.insert(0, "email.address@gmail.com")
 
 pass_entry = Entry(width=27)
-pass_entry.grid(column=1, row=3, sticky="ew")
+pass_entry.grid(column=1, row=3, sticky="ew", padx=5)
 
 gen_button = Button(text="Generate Password", command=gen_password)
-gen_button.grid(column=2, row=3, sticky="ew")
+gen_button.grid(column=2, row=3, sticky="ew", padx=5)
 
 add_button = Button(text="Add", command=add_entry, width=36)
-add_button.grid(column=1, row=4, columnspan=2, sticky="ew")
+add_button.grid(column=1, row=4, columnspan=2, sticky="ew", padx=5)
 
 window.mainloop()
