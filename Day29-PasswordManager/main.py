@@ -52,15 +52,20 @@ def add_entry():
     # write to file
     # switching to json from txt
     if input_ok:
-        with open("data.json", mode="r") as file:
-            # read old data
-            data = json.load(file)
-            # update with new data
-            data.update(new_data)
+        try:
+            with open("data.json", mode="r") as file:
+                # read old data
+                data = json.load(file)
+                # update with new data
+                data.update(new_data)
+                data_write = data
+        except FileNotFoundError:
+            print("File not found. Creating new file...")
+            data_write = new_data
 
         with open("data.json", mode="w") as file:
             # save updated data
-            json.dump(data, file, indent=4)
+            json.dump(data_write, file, indent=4)
 
         # reset fields
         site_entry.delete(0, END)
