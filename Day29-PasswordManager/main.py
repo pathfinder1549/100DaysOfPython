@@ -76,8 +76,25 @@ def add_entry():
             site_entry.focus()
 
 # ---------------------------- SEARCH --------------------------------- #
-def search():
-    pass
+def find_password():
+
+    # get input from text box of search string
+
+    try:
+        with open("data.json", mode="r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Warning", message="File not found!")
+    else:
+        try:
+            # look for string in data
+            pass
+        except:
+            # if not found pop a box
+            pass
+        else:
+            # if found pop a box showing entry
+            pass
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -113,7 +130,7 @@ user_entry.insert(0, "email.address@gmail.com")
 pass_entry = Entry(width=27)
 pass_entry.grid(column=1, row=3, sticky="ew", padx=5)
 
-search_button = Button(text="Search", command=search)
+search_button = Button(text="Search", command=find_password)
 search_button.grid(column=2, row=1, sticky="ew", padx=5)
 
 gen_button = Button(text="Generate Password", command=gen_password)
