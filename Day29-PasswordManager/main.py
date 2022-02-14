@@ -49,8 +49,7 @@ def add_entry():
         messagebox.showinfo(title="Warning", message="Please don't leave any fields empty!")
         input_ok = False
 
-    # write to file
-    # switching to json from txt
+    # write to json file
     if input_ok:
         try:
             with open("data.json", mode="r") as file:
@@ -75,7 +74,7 @@ def add_entry():
             pass_entry.delete(0, END)
             site_entry.focus()
 
-# ---------------------------- SEARCH --------------------------------- #
+# ---------------------------- FIND PASSWORD --------------------------------- #
 def find_password():
     """Search for entry in saved data"""
 
@@ -83,19 +82,17 @@ def find_password():
         with open("data.json", mode="r") as file:
             data = json.load(file)
     except FileNotFoundError:
-        messagebox.showinfo(title="Warning", message="File not found!")
+        messagebox.showinfo(title="Warning", message="Saved data not found!")
     else:
-        try:
+        site = site_entry.get()
+        if site in data:
             # look for entry data
-            site = site_entry.get()
             user = data[site]["user"]
             pw = data[site]["password"]
-        except:
+            messagebox.showinfo(title=site, message=f"Site: {site}\nEmail: {user}\nPassword: {pw}")
+        else:
             # if not found show error
             messagebox.showinfo(title="Warning", message="Entry not found!")
-        else:
-            # otherwise show entry
-            messagebox.showinfo(title=site, message=f"Site: {site}\nEmail: {user}\nPassword: {pw}")
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
