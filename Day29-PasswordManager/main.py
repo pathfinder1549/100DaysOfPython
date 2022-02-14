@@ -77,8 +77,7 @@ def add_entry():
 
 # ---------------------------- SEARCH --------------------------------- #
 def find_password():
-
-    # get input from text box of search string
+    """Search for entry in saved data"""
 
     try:
         with open("data.json", mode="r") as file:
@@ -87,15 +86,16 @@ def find_password():
         messagebox.showinfo(title="Warning", message="File not found!")
     else:
         try:
-            # look for string in data
-            pass
+            # look for entry data
+            site = site_entry.get()
+            user = data[site]["user"]
+            pw = data[site]["password"]
         except:
-            # if not found pop a box
-            pass
+            # if not found show error
+            messagebox.showinfo(title="Warning", message="Entry not found!")
         else:
-            # if found pop a box showing entry
-            pass
-
+            # otherwise show entry
+            messagebox.showinfo(title=site, message=f"Site: {site}\nEmail: {user}\nPassword: {pw}")
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
