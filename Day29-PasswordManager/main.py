@@ -52,8 +52,15 @@ def add_entry():
     # write to file
     # switching to json from txt
     if input_ok:
+        with open("data.json", mode="r") as file:
+            # read old data
+            data = json.load(file)
+            # update with new data
+            data.update(new_data)
+
         with open("data.json", mode="w") as file:
-            json.dump(new_data)
+            # save updated data
+            json.dump(data, file, indent=4)
 
         # reset fields
         site_entry.delete(0, END)
