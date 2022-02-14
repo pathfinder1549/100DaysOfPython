@@ -67,14 +67,19 @@ def add_entry():
             with open("data.json", mode="w") as file:
                 # write updated data
                 json.dump(data, file, indent=4)
+        finally:
+            # reset fields
+            site_entry.delete(0, END)
+            user_entry.delete(0, END)
+            user_entry.insert(0, "email.address@gmail.com")
+            pass_entry.delete(0, END)
+            site_entry.focus()
 
-        # reset fields
-        site_entry.delete(0, END)
-        user_entry.delete(0, END)
-        user_entry.insert(0, "email.address@gmail.com")
-        pass_entry.delete(0, END)
-        site_entry.focus()
-    
+# ---------------------------- SEARCH --------------------------------- #
+def search():
+    pass
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
@@ -98,7 +103,7 @@ pass_label = Label(text="Password:")
 pass_label.grid(column=0, row=3, sticky="e")
 
 site_entry = Entry(width=36)
-site_entry.grid(column=1, row=1, columnspan=2, sticky="ew", padx=5)
+site_entry.grid(column=1, row=1, columnspan=1, sticky="ew", padx=5)
 site_entry.focus()
 
 user_entry = Entry(width=36)
@@ -107,6 +112,9 @@ user_entry.insert(0, "email.address@gmail.com")
 
 pass_entry = Entry(width=27)
 pass_entry.grid(column=1, row=3, sticky="ew", padx=5)
+
+search_button = Button(text="Search", command=search)
+search_button.grid(column=2, row=1, sticky="ew", padx=5)
 
 gen_button = Button(text="Generate Password", command=gen_password)
 gen_button.grid(column=2, row=3, sticky="ew", padx=5)
