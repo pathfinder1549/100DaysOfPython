@@ -30,8 +30,18 @@ response = requests.get(url=owm_forecast_endpoint, params=owm_forecast_parameter
 response.raise_for_status()
 weather_data = response.json()
 
-print(weather_data)
+# print(weather_data)
 
+will_rain = False
 forecast_list = weather_data["list"]
 for forecast in forecast_list:
-    print(forecast["weather"][0]["main"])
+    weather_id = forecast["weather"][0]["id"]
+    weather_main = forecast["weather"][0]["main"]
+    print(f"Forecast: {weather_id} - {weather_main}")
+    if weather_id < 800:
+        will_rain = True
+
+if will_rain:
+    print("Rain forecasted in <24h!")
+else:
+    print("No rain in the forecast.")
