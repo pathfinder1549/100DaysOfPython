@@ -2,7 +2,9 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv("C:\python_env\.env.txt")   # env variables in file at this dir (all are strings)
+base_folder = os.path.dirname(__file__)
+env_path = os.path.join(base_folder, ".env.txt")
+load_dotenv(env_path)                   # load .env in root dir, load env vars (all are strings)
 API_KEY = os.getenv("owm_api_key")      # OpenWeatherMap.org api key
 MY_LAT = 43.646461
 MY_LNG = -72.011063
