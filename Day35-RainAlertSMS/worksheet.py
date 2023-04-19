@@ -1,8 +1,9 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-
-API_KEY = "7e67fc8252fd96b2191ba167b17b6ba1"
-API_KEY_ALT = "f42bfd2b4a5b3da3d5ae3a1ebb2680d8"    # OpenWeatherMap.org api key
+load_dotenv("C:\python_env\.env.txt")   # env variables in file at this dir
+API_KEY = os.getenv("owm_api_key")      # OpenWeatherMap.org api key
 MY_LAT = 43.646461
 MY_LNG = -72.011063
 NUM_HOURS = 8
@@ -43,5 +44,7 @@ for forecast in forecast_list:
 
 if will_rain:
     print("Rain forecasted in <24h!")
+    # skipping twilio sms integration, no trial acct
+    # https://www.twilio.com/try-twilio for api and trial info
 else:
     print("No rain in the forecast.")
