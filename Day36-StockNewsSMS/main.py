@@ -44,9 +44,9 @@ def stock_moving(stock: str) -> bool:
     delta_pct = (price_end - price_start) / price_start * 100
 
     # print values and delta for testing
-    print(f"{date_start_str} closing price: {price_start}")
-    print(f"{date_end_str} closing price: {price_end}")
-    print(f"Price change: {delta_pct:.2f}%")
+    print(f"{stock} {date_start_str} closing price: {price_start}")
+    print(f"{stock} {date_end_str} closing price: {price_end}")
+    print(f"{stock} 24H movement: {delta_pct:.2f}%")
 
     # flag if delta is over 5%
     if delta_pct >= 5:
@@ -62,9 +62,43 @@ else:
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
+def get_headlines(stock: str) -> list:
+    # request news related to stock from api, limit to 3 top results
+    news_key = os.getenv("news_api_key")      #https://newsapi.org/docs/get-started
+    news_endpoint = "https://newsapi.org/v2/everything"
+    news_params = {
+        "q": stock,
+        "searchIn": "title",
+        "language": "en",
+        "apikey": news_key,
+    }
+    r = requests.get(url=news_endpoint, params=news_params)
+    news_articles = r.json()["articles"][:3]
+
+    # return new list with only title, desc, and url
+    article_list = []
+    for article in news_articles:
+        new_article = {
+            "Headline": article["title"],
+            "Brief": article["description"],
+            "Link": article["url"],
+        }
+        article_list.append(new_article)
+    return article_list
+    
+news_list = get_headlines(STOCK)
+
+
 ## STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number. 
 
+# skipping twilio sms integration, no trial acct
+# https://www.twilio.com/try-twilio for api and trial info
+# printing sample sms message below
+
+print(f"{STOCK} Trending News:")
+for news in news_list:
+    print(news["Headline"])
 
 #Optional: Format the SMS message like this: 
 """
