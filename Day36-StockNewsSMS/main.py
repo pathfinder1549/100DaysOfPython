@@ -39,6 +39,9 @@ def stock_moving(stock: str) -> bool:
     date_end_str = f"{date_end.year}-{date_end.month:02}-{date_end.day:02}"
     
     # find closing price for interval start and end, delta %
+    # note - this will break where the api doesnt return data for market closed days
+    # solution uses list comprehension instead of calculating dates
+    # convert series dict to list and just check indexes 0 and 1
     price_start = float(stock_time_series[date_start_str]["4. close"])
     price_end = float(stock_time_series[date_end_str]["4. close"])
     delta_pct = (price_end - price_start) / price_start * 100
@@ -70,7 +73,7 @@ def get_headlines(stock: str) -> list:
         "q": stock,
         "searchIn": "title",
         "language": "en",
-        "apikey": news_key,
+        "apiKey": news_key,
     }
     r = requests.get(url=news_endpoint, params=news_params)
     news_articles = r.json()["articles"][:3]
