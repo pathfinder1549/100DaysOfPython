@@ -56,5 +56,11 @@ edit_params = {
     "quantity": "8",
 }
 
-response = requests.put(url=edit_endpoint, json=edit_params, headers=headers)
+#response = requests.put(url=edit_endpoint, json=edit_params, headers=headers)
+#print(response.text)
+
+# delete a pixel
+delete_endpoint = edit_endpoint
+
+response = requests.delete(url=delete_endpoint, headers=headers)
 print(response.text)
