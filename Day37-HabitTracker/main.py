@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 base_folder = os.path.dirname(__file__)
 env_path = os.path.join(base_folder, ".env.txt")
@@ -42,8 +43,8 @@ headers = {
 # enter new data api info
 data_endpoint = f"{graph_endpoint}/{GRAPH_ID}"
 data_params = {
-    "date": "20230728",
-    "quantity": "3",
+    "date": datetime.now().strftime("%Y%m%d"),
+    "quantity": "4",
 }
 
 response = requests.post(url=data_endpoint, json=data_params, headers=headers)
