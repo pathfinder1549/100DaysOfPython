@@ -47,5 +47,14 @@ data_params = {
     "quantity": "4",
 }
 
-response = requests.post(url=data_endpoint, json=data_params, headers=headers)
+#response = requests.post(url=data_endpoint, json=data_params, headers=headers)
+#print(response.text)
+
+# edit a pixel
+edit_endpoint = f"{data_endpoint}/20230728"
+edit_params = {
+    "quantity": "8",
+}
+
+response = requests.put(url=edit_endpoint, json=edit_params, headers=headers)
 print(response.text)
